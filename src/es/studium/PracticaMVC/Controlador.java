@@ -47,7 +47,6 @@ public class Controlador implements ActionListener, WindowListener
 
 				if (seleccion == 0){
 					Model.ejecutarIDA("DELETE FROM demandantes", Model.conectar("practicaMVC", "root", "Studium2018;"));
-					
 				} else if(seleccion == 1) {
 					
 				}
