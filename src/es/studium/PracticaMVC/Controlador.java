@@ -46,6 +46,7 @@ public class Controlador implements ActionListener, WindowListener
 				int seleccion = JOptionPane.showOptionDialog( null,"¿Desea eliminar demandante?","Eliminar demandante",JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,new Object[] { "Eliminar", "Cancelar"},"Cancelar");
 
 				if (seleccion == 0){
+					Model.ejecutarIDA("DELETE FROM demandantes", Model.conectar("practicaMVC", "root", "Studium2018;"));
 					
 				} else if(seleccion == 1) {
 					
