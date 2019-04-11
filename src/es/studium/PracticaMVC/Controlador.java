@@ -181,7 +181,7 @@ public class Controlador implements ActionListener, WindowListener
 					JOptionPane.showMessageDialog(null,e.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
 				}
 				Model.desconectar(Model.conectar("practicamvc","root" ,"Studium2018;"));
-
+				ConOf.tablaOfertas.setEnabled(false);
 				
 			}
 			if(ConOf.btnAceptar.equals(ae.getSource())) {
