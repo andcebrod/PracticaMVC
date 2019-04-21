@@ -69,6 +69,7 @@ public class Controlador implements ActionListener, WindowListener
 						JOptionPane.showMessageDialog(null,"Introduzca demandante válido","Error de demandante", JOptionPane.ERROR_MESSAGE);
 					}
 					Model.ejecutarIDA("DELETE FROM demandantes where idDemandante ="+demandanteSeleccionado+";", Model.conectar("practicamvc", "root", "Studium2018;"));
+					JOptionPane.showMessageDialog(null,"Demandante eliminado con éxito","Demandante eliminado", JOptionPane.INFORMATION_MESSAGE);
 				} else if(seleccion == 1) {
 
 				}
@@ -143,14 +144,18 @@ public class Controlador implements ActionListener, WindowListener
 				Model.ejecutarIDA("UPDATE ofertas SET fechaOferta ='"+Fecha+"', fechaFinOferta='"+FechaFin+"', requisitosOferta ='"+EdOf.txtRequisitos.getText()+"' WHERE idOferta ="+ofertaSeleccionada+";", Model.conectar("practicamvc","root" ,"Studium2018;"));
 				JOptionPane.showMessageDialog(null,"Oferta Modificada con éxito","Oferta Modificada", JOptionPane.INFORMATION_MESSAGE);
 			}
+			else if (EdOf.btnCancelar.equals(ae.getSource())) {
+				EdOf.setVisible(false);
+				MenuPrinci.setVisible(true);
+			}
 
 
 		} catch(NullPointerException np) {
 
 		}
 		
-		try {
-			
+		//CONSULTA OFERTAS
+		try {	
 			if(MenuPrinci.mniOfertasConsulta.equals(ae.getSource())) {
 				ConOf = new ConsultaOfertas();
 				MenuPrinci.setVisible(false);
