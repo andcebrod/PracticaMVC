@@ -166,7 +166,7 @@ public class Controlador implements ActionListener, WindowListener
 				ConOf.modelo.addColumn("Fecha Fin");
 				
 				
-				ResultSet Co = Model.ejecutarSelect("select idOfertaFK, count(idDemandanteFK), fechaFinOferta from asignaciones join ofertas on idOfertaFK = idOferta group by idDemandanteFK order by idOfertaFK;", Model.conectar("practicamvc","root" ,"Studium2018;"));
+				ResultSet Co = Model.ejecutarSelect("select idOfertaFK, count(idDemandanteFK), fechaFinOferta from asignaciones join ofertas on idOfertaFK = idOferta group by idOfertaFK order by idOfertaFK;", Model.conectar("practicamvc","root" ,"Studium2018;"));
 				try {
 					// Bucle para cada resultado en la consulta
 					while (Co.next())
