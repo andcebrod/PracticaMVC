@@ -162,21 +162,20 @@ public class Controlador implements ActionListener, WindowListener
 				ConOf.addWindowListener(this);
 				ConOf.btnAceptar.addActionListener(this);
 				ConOf.modelo.addColumn("Número");
-				ConOf.modelo.addColumn("Fecha");
+				ConOf.modelo.addColumn("Número Demandantes");
 				ConOf.modelo.addColumn("Fecha Fin");
-				ConOf.modelo.addColumn("Requisitos");
 				
 				
-				ResultSet Co = Model.ejecutarSelect("SELECT * FROM ofertas", Model.conectar("practicamvc","root" ,"Studium2018;"));
+				ResultSet Co = Model.ejecutarSelect("select idOfertaFK, count(idDemandanteFK), fechaFinOferta from asignaciones join ofertas on idOfertaFK = idOferta group by idDemandanteFK order by idOfertaFK;", Model.conectar("practicamvc","root" ,"Studium2018;"));
 				try {
 					// Bucle para cada resultado en la consulta
 					while (Co.next())
 					{
 					   // Se crea un array que será una de las filas de la tabla. 
-					   Object [] fila = new Object[4]; // Hay tres columnas en la tabla
+					   Object [] fila = new Object[3]; // Hay tres columnas en la tabla
 
 					   // Se rellena cada posición del array con una de las columnas de la tabla en base de datos.
-					   for (int i=0;i<4;i++)
+					   for (int i=0;i<3;i++)
 					      fila[i] = Co.getObject(i+1); // El primer indice en rs es el 1, no el cero, por eso se suma 1.
 
 					   // Se añade al modelo la fila completa.
