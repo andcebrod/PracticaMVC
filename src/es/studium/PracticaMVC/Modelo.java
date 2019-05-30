@@ -18,8 +18,6 @@ public class Modelo
 		String login = usuario;
 		String password = clave;
 		Connection connection = null;
-		Statement statement = null;
-		ResultSet rs = null;
 
 		try
 		{
@@ -82,10 +80,8 @@ public class Modelo
 	}
 	public String Calendario() {
 		Calendar horaFecha = Calendar.getInstance();
-		int hora,minutos,dia,mes,anyo;
+		int dia,mes,anyo;
 
-		hora = horaFecha.get(Calendar.HOUR_OF_DAY);
-		minutos = horaFecha.get(Calendar.MINUTE);
 		dia = horaFecha.get(Calendar.DAY_OF_MONTH);
 		mes = horaFecha.get(Calendar.MONTH)+1;
 		anyo = horaFecha.get(Calendar.YEAR);

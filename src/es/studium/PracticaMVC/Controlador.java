@@ -4,13 +4,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.PdfPTable;
 import javax.swing.JOptionPane;
 
 public class Controlador implements ActionListener, WindowListener
 {
+	
 	Modelo Model;
 	MenuPrincipal MenuPrinci;
 	BajaDemandante BajaDem;
@@ -18,9 +24,9 @@ public class Controlador implements ActionListener, WindowListener
 	EdicionOferta EdOf;
 	AltaAsignacion Aa;
 	ConsultaOfertas ConOf;
-
 	int ofertaSeleccionada = 0;
 	int demandanteSeleccionado = 0;
+	Document documento = new Document();
 
 
 	public Controlador(Modelo m, MenuPrincipal Mp) {
@@ -161,6 +167,7 @@ public class Controlador implements ActionListener, WindowListener
 				MenuPrinci.setVisible(false);
 				ConOf.addWindowListener(this);
 				ConOf.btnAceptar.addActionListener(this);
+				ConOf.btnPdf.addActionListener(this);
 				ConOf.modelo.addColumn("Número");
 				ConOf.modelo.addColumn("Número Demandantes");
 				ConOf.modelo.addColumn("Fecha Fin");
@@ -176,7 +183,11 @@ public class Controlador implements ActionListener, WindowListener
 
 					   // Se rellena cada posición del array con una de las columnas de la tabla en base de datos.
 					   for (int i=0;i<3;i++)
-					      fila[i] = Co.getObject(i+1); // El primer indice en rs es el 1, no el cero, por eso se suma 1.
+					      if(i==2) {
+					    	  fila[i] = Co.getString("fechaFinOferta");
+					      } else {
+					    	  fila[i] = Co.getObject(i+1); // El primer indice en rs es el 1, no el cero, por eso se suma 1.
+					      }
 
 					   // Se añade al modelo la fila completa.
 					   ConOf.modelo.addRow(fila); 
@@ -191,14 +202,53 @@ public class Controlador implements ActionListener, WindowListener
 			if(ConOf.btnAceptar.equals(ae.getSource())) {
 				ConOf.setVisible(false);
 				MenuPrinci.setVisible(true);
+			} else if (ConOf.btnPdf.equals(ae.getSource())) {
+				FileOutputStream ficheroPdf;
+				try {
+					ficheroPdf = new FileOutputStream("fichero.pdf");
+					PdfWriter.getInstance(documento,ficheroPdf).setInitialLeading(20);
+					documento.open();
+					PdfPTable tabla = new PdfPTable(3);
+					tabla.addCell("id Oferta");
+					tabla.addCell("Número Demandantes");
+					tabla.addCell("Fecha Fin");
+					ResultSet Co = Model.ejecutarSelect("select idOfertaFK, count(idDemandanteFK), fechaFinOferta from asignaciones join ofertas on idOfertaFK = idOferta group by idOfertaFK order by idOfertaFK;", Model.conectar("practicamvc","root" ,"Studium2018;"));
+					try {
+						// Bucle para cada resultado en la consulta
+						while (Co.next())
+						{	
+							   // Se rellena cada posición del array con una de las columnas de la tabla en base de datos.
+							   for (int i=0;i<3;i++) {
+							      if(i==2) {
+							    	  tabla.addCell(Co.getString("fechaFinOferta")); 
+							      } else if(i==0) {
+							    	  tabla.addCell(Co.getString("idOfertaFK"));
+							      } else if(i==1) {
+							    	  tabla.addCell(Co.getString("count(idDemandanteFK)"));
+							      }
+							   }
+						}
+						 documento.add(tabla);
+						documento.close();
+					} catch (SQLException e) {
+						JOptionPane.showMessageDialog(null,e.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
+					}
+					
+					
+					
+					
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
 			}
-			
-			
-			
-			
-			
+	
 		} catch(NullPointerException np) {
 
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 		//ALTA ASIGNACIÓN

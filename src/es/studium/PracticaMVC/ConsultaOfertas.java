@@ -13,6 +13,7 @@ public class ConsultaOfertas extends JFrame {
 	DefaultTableModel modelo = new DefaultTableModel();
 	JTable tablaOfertas= new JTable(modelo);
 	JButton btnAceptar = new JButton("Aceptar");
+	JButton btnPdf = new JButton ("Crear PDF");
 	JPanel pnlB = new JPanel();
 	public ConsultaOfertas() {
 		this.setSize(500,200);
@@ -21,6 +22,7 @@ public class ConsultaOfertas extends JFrame {
 		this.setLayout(new BorderLayout());
 		this.add(new JScrollPane(tablaOfertas),BorderLayout.CENTER);
 		pnlB.add(btnAceptar);
+		pnlB.add(btnPdf);
 		this.add(pnlB,BorderLayout.SOUTH);
 		this.setVisible(true);
 	}
