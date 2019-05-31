@@ -1,7 +1,6 @@
 package es.studium.PracticaMVC;
 
 import java.awt.GridLayout;
-
 import javax.swing.*;
 
 public class EdicionOferta extends JFrame {
@@ -21,13 +20,11 @@ public class EdicionOferta extends JFrame {
 	JTextField txtRequisitos = new JTextField(10);
 	JButton btnActualizar = new JButton("Actualizar");
 	JButton btnCancelar = new JButton("Cancelar");
-
 	JPanel pnl1 = new JPanel();
 	JPanel pnl2 = new JPanel();
 	JPanel pnl3 = new JPanel();
 	JPanel pnl4 = new JPanel();
 	JPanel pnl5 = new JPanel();
-	
 	public EdicionOferta(int id) {
 		this.setTitle("Edición Oferta");
 		this.setLayout(new GridLayout(5,1));
@@ -52,6 +49,4 @@ public class EdicionOferta extends JFrame {
 		this.add(pnl5);
 		this.setVisible(true);
 	}
-	
-	
 }

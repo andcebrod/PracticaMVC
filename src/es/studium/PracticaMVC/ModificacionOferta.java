@@ -10,16 +10,14 @@ public class ModificacionOferta extends JFrame
 	Choice ofertas = new Choice();
 	JButton btnEditar = new JButton("Editar");
 	JButton btnCancelar = new JButton("Cancelar");
-	
 	JPanel pnl1 = new JPanel();
 	JPanel pnl2 = new JPanel();
 	JPanel pnl3 = new JPanel();
-	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	
 	public ModificacionOferta() {
 		this.setTitle("Modificación Oferta");
 		this.setLayout(new GridLayout (3,1));
@@ -33,7 +31,5 @@ public class ModificacionOferta extends JFrame
 		this.add(pnl2);
 		this.add(pnl3);
 		this.setVisible(true);
-		
 	}
-
 }

@@ -1,12 +1,10 @@
 package es.studium.PracticaMVC;
 
-import java.awt.BorderLayout;
-
+import java.awt.FlowLayout;
 import javax.swing.*;
 
 public class MenuPrincipal extends JFrame
 {
-
 	/**
 	 * 
 	 */
@@ -23,11 +21,11 @@ public class MenuPrincipal extends JFrame
 	JPanel pnl1 = new JPanel();
 	
 	public MenuPrincipal() {
-		
-		this.setSize(300,200);
+		this.setSize(300,250);
 		this.setTitle("Práctica MVC");
 		this.setLocationRelativeTo(null);
-		this.setLayout(new BorderLayout());
+		this.setLayout(new FlowLayout());
+		this.setJMenuBar(barraMenu);
 		menuDemandantes.add(mniDemandantesBaja);
 		menuOfertas.add(mniOfertasModificacion);
 		menuOfertas.add(mniOfertasConsulta);
@@ -35,13 +33,8 @@ public class MenuPrincipal extends JFrame
 		barraMenu.add(menuDemandantes);
 		barraMenu.add(menuOfertas);
 		barraMenu.add(menuGestion);
-		pnl1.setSize(300, 290);
-		this.add(pnl1,BorderLayout.SOUTH);
-		this.add(barraMenu);
-		
-		
-		this.setVisible(true);
-		
+		this.add(pnl1);
+		this.setVisible(true);	
 	}
 	
 }

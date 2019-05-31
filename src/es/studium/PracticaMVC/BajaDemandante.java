@@ -2,7 +2,6 @@ package es.studium.PracticaMVC;
 
 import java.awt.Choice;
 import java.awt.GridLayout;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -10,21 +9,17 @@ import javax.swing.JPanel;
 
 public class BajaDemandante extends JFrame
 {
-	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
 	JLabel lblElegir = new JLabel("Elegir demandante a dar de baja:");
 	Choice demandantes = new Choice();
 	JButton btnEliminar = new JButton("Eliminar");
 	JButton btnCancelar = new JButton("Cancelar");
-
 	JPanel pnl1 = new JPanel();
 	JPanel pnl2 = new JPanel();
 	JPanel pnl3 = new JPanel();
-	
 	public BajaDemandante() {
 		this.setSize(300,200);
 		this.setTitle("Baja Demandante");
@@ -39,6 +34,5 @@ public class BajaDemandante extends JFrame
 		this.add(pnl2);
 		this.add(pnl3);
 		this.setVisible(true);
-		
 	}
 }
