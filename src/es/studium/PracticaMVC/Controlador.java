@@ -64,10 +64,10 @@ public class Controlador implements ActionListener, WindowListener
 						demandanteSeleccionado = Integer.parseInt(array[0]);
 					} catch (NumberFormatException Nf) 
 					{
-						JOptionPane.showMessageDialog(null,"Introduzca demandante vÃ¡lido","Error de demandante", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null,"Introduzca demandante válido","Error de demandante", JOptionPane.ERROR_MESSAGE);
 					}
 					Model.ejecutarIDA("DELETE FROM demandantes where idDemandante ="+demandanteSeleccionado+";", Model.conectar("practicamvc", "root", "Studium2018;"));
-					JOptionPane.showMessageDialog(null,"Demandante eliminado con Ã©xito","Demandante eliminado", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null,"Demandante eliminado con éxito","Demandante eliminado", JOptionPane.INFORMATION_MESSAGE);
 				} else if(seleccion == 1){}
 			}
 			if(BajaDem.btnCancelar.equals(ae.getSource())) {
@@ -83,13 +83,13 @@ public class Controlador implements ActionListener, WindowListener
 			ModOf.addWindowListener(this);
 			ModOf.btnEditar.addActionListener(this);
 			ModOf.btnCancelar.addActionListener(this);
-			ResultSet of = Model.ejecutarSelect("SELECT * FROM ofertas", Model.conectar("practicamvc","root","Studium2018;"));
+			ResultSet of = Model.ejecutarSelect("SELECT idOferta,DATE_FORMAT(fechaOferta, '%d/%m/%Y'),DATE_FORMAT(fechaFinOferta, '%d/%m/%Y')  FROM ofertas", Model.conectar("practicamvc","root","Studium2018;"));
 			try 
 			{
 				while(of.next())
 				{
 					String ofertas=Integer.toString(of.getInt("idOferta"));
-					ofertas = ofertas+".-"+"Fecha Oferta:"+of.getString("fechaOferta")+" Fecha Fin Oferta:"+ of.getString("fechaFinOferta");
+					ofertas = ofertas+".-"+"Fecha Oferta:"+of.getString("DATE_FORMAT(fechaOferta, '%d/%m/%Y')")+" Fecha Fin Oferta:"+ of.getString("DATE_FORMAT(fechaFinOferta, '%d/%m/%Y')");
 					ModOf.ofertas.add(ofertas);
 				}
 			} catch (SQLException e) {
@@ -97,7 +97,7 @@ public class Controlador implements ActionListener, WindowListener
 			}
 			Model.desconectar(Model.conectar("practicamvc","root" ,"Studium2018;"));
 		}
-		//EDICIÃ“N OFERTA
+		//EDICIÓN OFERTA
 		try {
 			if(ModOf.btnEditar.equals(ae.getSource())) 
 			{
@@ -108,12 +108,12 @@ public class Controlador implements ActionListener, WindowListener
 				EdOf.btnCancelar.addActionListener(this);
 				EdOf.addWindowListener(this);
 				ModOf.setVisible(false);
-				ResultSet ofSel = Model.ejecutarSelect("SELECT * FROM ofertas where idOferta ="+ofertaSeleccionada+";", Model.conectar("practicamvc","root","Studium2018;"));
+				ResultSet ofSel = Model.ejecutarSelect("SELECT DATE_FORMAT(fechaOferta, '%d/%m/%Y'),DATE_FORMAT(fechaFinOferta, '%d/%m/%Y'),requisitosOferta   FROM ofertas where idOferta ="+ofertaSeleccionada+";", Model.conectar("practicamvc","root","Studium2018;"));
 				try 
 				{
 					ofSel.next();
-					EdOf.txtFecha.setText(ofSel.getString("fechaOferta"));
-					EdOf.txtFechaFin.setText(ofSel.getString("fechaFinOferta"));
+					EdOf.txtFecha.setText(ofSel.getString("DATE_FORMAT(fechaOferta, '%d/%m/%Y')"));
+					EdOf.txtFechaFin.setText(ofSel.getString("DATE_FORMAT(fechaFinOferta, '%d/%m/%Y')"));
 					EdOf.txtRequisitos.setText(ofSel.getString("requisitosOferta"));
 
 				} catch (SQLException e) 
@@ -139,7 +139,7 @@ public class Controlador implements ActionListener, WindowListener
 					FechaFin = arrayFechaFin[2]+"-"+arrayFechaFin[1]+"-"+arrayFechaFin[0];
 				} catch (ArrayIndexOutOfBoundsException ai) {}
 				Model.ejecutarIDA("UPDATE ofertas SET fechaOferta ='"+Fecha+"', fechaFinOferta='"+FechaFin+"', requisitosOferta ='"+EdOf.txtRequisitos.getText()+"' WHERE idOferta ="+ofertaSeleccionada+";", Model.conectar("practicamvc","root" ,"Studium2018;"));
-				JOptionPane.showMessageDialog(null,"Oferta Modificada con Ã©xito","Oferta Modificada", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null,"Oferta Modificada con éxito","Oferta Modificada", JOptionPane.INFORMATION_MESSAGE);
 			}
 			else if (EdOf.btnCancelar.equals(ae.getSource()))
 			{
@@ -157,8 +157,8 @@ public class Controlador implements ActionListener, WindowListener
 				MenuPrinci.setVisible(false);
 				ConOf.addWindowListener(this);
 				ConOf.btnAceptar.addActionListener(this);
-				ConOf.modelo.addColumn("NÃºmero");
-				ConOf.modelo.addColumn("NÃºmero Demandantes");
+				ConOf.modelo.addColumn("Número");
+				ConOf.modelo.addColumn("Número Demandantes");
 				ConOf.modelo.addColumn("Fecha Fin");
 				ResultSet Co = Model.ejecutarSelect("select idOfertaFK, count(idDemandanteFK), DATE_FORMAT(fechaFinOferta, '%d/%m/%Y') from asignaciones join ofertas on idOfertaFK = idOferta group by idOfertaFK order by idOfertaFK;", Model.conectar("practicamvc","root" ,"Studium2018;"));
 				try {
@@ -197,13 +197,13 @@ public class Controlador implements ActionListener, WindowListener
 				Aa.btnCancelar.addActionListener(this);
 				Aa.addWindowListener(this);
 				//CHOICE OFERTAS
-				ResultSet Aof = Model.ejecutarSelect("SELECT * FROM ofertas", Model.conectar("practicamvc","root","Studium2018;"));
+				ResultSet Aof = Model.ejecutarSelect("SELECT idOferta, DATE_FORMAT(fechaOferta, '%d/%m/%Y'),DATE_FORMAT(fechaFinOferta, '%d/%m/%Y') FROM ofertas;", Model.conectar("practicamvc","root","Studium2018;"));
 				try 
 				{
 					while(Aof.next())
 					{
 						String ofertas=Integer.toString(Aof.getInt("idOferta"));
-						ofertas = ofertas+".-"+"Fecha Oferta:"+Aof.getString("fechaOferta")+" Fecha Fin Oferta:"+ Aof.getString("fechaFinOferta");
+						ofertas = ofertas+".-"+"Fecha Oferta:"+Aof.getString("DATE_FORMAT(fechaOferta, '%d/%m/%Y')")+" Fecha Fin Oferta:"+ Aof.getString("DATE_FORMAT(fechaFinOferta, '%d/%m/%Y')");
 						Aa.ofertas.add(ofertas);
 					}
 				} catch (SQLException e) 
@@ -242,7 +242,7 @@ public class Controlador implements ActionListener, WindowListener
 				String[] arrayDemanda= Aa.demandantes.getSelectedItem().toString().split(".-");
 				demandanteSeleccionado = Integer.parseInt(arrayDemanda[0]);
 				Model.ejecutarIDA("INSERT INTO asignaciones VALUES (null,'"+Fecha+"', '"+ofertaSeleccionada+"', '"+demandanteSeleccionado+"');",Model.conectar("practicamvc","root","Studium2018;"));
-				JOptionPane.showMessageDialog(null,"AsignaciÃ³n aÃ±adida con Ã©xito","AsignaciÃ³n aÃ±adida", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null,"Asignación añadida con éxito","Asignación añadida", JOptionPane.INFORMATION_MESSAGE);
 			} else if (Aa.btnCancelar.equals(ae.getSource())) 
 			{
 				MenuPrinci.setVisible(true);
